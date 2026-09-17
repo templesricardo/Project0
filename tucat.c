@@ -78,14 +78,18 @@ int main(int argc, char *argv[])
 
                 if (bytes_written == -1 || bytes_written != bytes_read) {
                     perror("tucat: write");
-                    close(fd);
+                    if (close(fd) == -1) {
+                        perror("tucat: close");
+                    }
                     return 1;
                 }
             }
 
             if (bytes_read == -1) {
                 perror("tucat: read");
-                close(fd);
+                if(close(fd) == -1) {
+                    perror("tucat: close");
+                }
                 return 1;
             }
 
